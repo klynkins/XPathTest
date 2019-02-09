@@ -1,11 +1,11 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 
 namespace XPathTest
 {
@@ -14,7 +14,8 @@ namespace XPathTest
         static void Main(string[] args)
         {
             var options = new ChromeOptions();
-            //options.AddArguments("disable-popup-blocking");
+            options.AddArguments("--disable-gpu");
+            options.AddArguments("disable-popup-blocking");
 
             var chromeDriver = new ChromeDriver("C:\\Users\\klync\\Source\\Repos\\XPathTest\\XPathTest", options);
 
@@ -32,13 +33,14 @@ namespace XPathTest
 
             IWebElement list = chromeDriver.FindElementByTagName("tbody");
             System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> stocks = list.FindElements(By.TagName("tr"));
+            int count = stocks.Count();
 
             Console.WriteLine("Info on stocks in Katelynn's Portfolio: " + stocks.Count);
 
-            for (int i = 1; i <= stocks.Count; i++)
+            for (int i = 1; i <= count; i++)
             {
                 chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-                var symbol = chromeDriver.FindElementByXPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + i + "]/td[1]/span/a").Text;
+                var symbol = chromeDriver.FindElementByXPath("//*[@id=\"pf-detail-table\"]/div[1]/table/tbody/tr[" + i + "]/td[1]").GetAttribute("innerText");
 
                 Console.WriteLine(symbol);
 
