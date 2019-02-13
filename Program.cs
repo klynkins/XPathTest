@@ -35,7 +35,7 @@ namespace XPathTest
             System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> stocks = list.FindElements(By.TagName("tr"));
             int count = stocks.Count();
 
-            Console.WriteLine("Info on stocks in Katelynn's Portfolio: " + stocks.Count);
+            //Console.WriteLine("Info on stocks in Katelynn's Portfolio: " + stocks.Count);
 
             for (int i = 1; i <= count; i++)
             {
